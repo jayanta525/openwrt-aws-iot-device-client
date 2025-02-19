@@ -1,0 +1,3 @@
+config aws-iot-device-client config
+    option thing_name myawsthing
+    option certs_path /tmp/certs
