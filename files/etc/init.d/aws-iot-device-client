@@ -5,30 +5,32 @@ PROG=/usr/bin/aws-iot-device-client
 
 
 start_instance() {
-	local cfg="$1"
-	local duration
-	local enabled
+    local cfg="$1"
+    local duration
+    local enabled
 
-	config_get_bool enabled "$cfg" 'enabled' 0
-	config_get duration "$cfg" 'duration' 0
+    config_get_bool enabled "$cfg" 'enabled' 0
+    config_get duration "$cfg" 'duration' 0
 
-	[ $enabled -gt 0 ] || return 1
+    [ $enabled -gt 0 ] || return 1
 
-	# Usually, procd should be used for services running in the background. See example3.
-	service_start $PROG $duration
+    # Usually, procd should be used for services running in the background. See example3.
+    service_start $PROG $duration
 }
 
 stop_instance() {
-	local cfg="$1"
-	service_stop "$PROG"
+    local cfg="$1"
+    service_stop "$PROG"
 }
 
 start() {
-	config_load 'aws-iot-device-client'
-	config_foreach start_instance 'example1'
+    config_load 'aws-iot-device-client'
+-	config_foreach start_instance 'example1'
++	config_foreach start_instance 'aws-iot-device-client'
 }
 
 stop() {
-	config_load 'aws-iot-device-client'
-	config_foreach stop_instance 'example1'
+    config_load 'aws-iot-device-client'
+-	config_foreach stop_instance 'example1'
++	config_foreach stop_instance 'aws-iot-device-client'
 }
