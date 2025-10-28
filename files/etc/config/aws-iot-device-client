@@ -1,3 +1,5 @@
-config aws-iot-device-client config
-    option thing_name myawsthing
-    option certs_path /tmp/certs
+config aws-iot-device-client 'instance1'
+    option enabled '1'
+    option config_file '/etc/aws-iot-client/config.json'
+    option thing_name 'my-thing'
+    option endpoint 'abcdefgh-ats.iot.region.amazonaws.com'

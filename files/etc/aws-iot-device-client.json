@@ -1,0 +1,50 @@
+{
+  "cert": "/tmp/config/certificate.pem.crt",
+  "key": "/tmp/config/private.pem.key",
+  "root-ca": "/tmp/config/AmazonRootCA1.pem",
+  "logging": {
+    "level": "DEBUG",
+    "type": "STDOUT",
+    "file": "/var/log/aws-iot-device-client/aws-iot-device-client.log",
+    "enable-sdk-logging": false,
+    "sdk-log-level": "TRACE",
+    "sdk-log-file": "/var/log/aws-iot-device-client/sdk.log"
+  },
+  "jobs": {
+    "enabled": true,
+    "handler-directory": "/etc/jobs"
+  },
+  "tunneling": {
+    "enabled": true
+  },
+  "device-defender": {
+    "enabled": false,
+    "interval": 300
+  },
+  "fleet-provisioning": {
+    "enabled": false,
+    "template-name": "",
+    "template-parameters": "",
+    "csr-file": "",
+    "device-key": ""
+  },
+  "samples": {
+    "pub-sub": {
+      "enabled": true,
+      "publish-topic": "{{PUBLISH_TOPIC}}",
+      "publish-file": "/tmp/pubsub/publish-file.txt",
+      "subscribe-topic": "{{SUBSCRIBE_TOPIC}}",
+      "subscribe-file": "/tmp/pubsub/subscribe-file.txt",
+      "publish-on-change": true
+    }
+  },
+  "config-shadow": {
+    "enabled": false
+  },
+  "sample-shadow": {
+    "enabled": false,
+    "shadow-name": "",
+    "shadow-input-file": "",
+    "shadow-output-file": ""
+  }
+}

@@ -6,31 +6,44 @@ PROG=/usr/bin/aws-iot-device-client
 
 start_instance() {
     local cfg="$1"
-    local duration
     local enabled
+    local cfgpath
+    local thing
+    local endpoint
+    local args
 
     config_get_bool enabled "$cfg" 'enabled' 0
-    config_get duration "$cfg" 'duration' 0
-
     [ $enabled -gt 0 ] || return 1
 
-    # Usually, procd should be used for services running in the background. See example3.
-    service_start $PROG $duration
+    # Read UCI options (assumed option names: config_file, thing_name, endpoint)
+    config_get cfgpath "$cfg" 'config_file' ''
+    config_get thing "$cfg" 'thing_name' ''
+    config_get endpoint "$cfg" 'endpoint' ''
+
+    args=""
+    [ -n "$cfgpath" ] && args="$args --config-file $cfgpath"
+    [ -n "$thing" ] && args="$args --thing-name $thing"
+    [ -n "$endpoint" ] && args="$args --endpoint $endpoint"
+
+    if [ -n "$args" ]; then
+        service_start $PROG $args
+    else
+        service_start $PROG
+    fi
 }
 
 stop_instance() {
     local cfg="$1"
+    # service_stop will stop the matching program.
     service_stop "$PROG"
 }
 
 start() {
     config_load 'aws-iot-device-client'
--	config_foreach start_instance 'example1'
-+	config_foreach start_instance 'aws-iot-device-client'
+	config_foreach start_instance 'aws-iot-device-client'
 }
 
 stop() {
     config_load 'aws-iot-device-client'
--	config_foreach stop_instance 'example1'
-+	config_foreach stop_instance 'aws-iot-device-client'
+	config_foreach stop_instance 'aws-iot-device-client'
 }
